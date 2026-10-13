@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rương Kiến Thức – Giáo Dục Quốc Phòng</title>
+  <meta name="description" content="Trò chơi trắc nghiệm Gacha Rương Kiến Thức – Giáo Dục Quốc Phòng, phong cách Công an nhân dân Việt Nam.">
+
+  <!-- Google Fonts: Oswald (Tiêu đề) & Be Vietnam Pro (Nội dung) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=2.3">
+</head>
+<body>
+  <!-- Họa tiết nền ngôi sao & hoa văn an ninh -->
+  <div class="bg-pattern" aria-hidden="true"></div>
+  <div class="bg-vignette" aria-hidden="true"></div>
+
+  <!-- Toàn bộ trò chơi nằm trọn trong khung game trung tâm -->
+  <main class="game-viewport" id="gameViewport">
+    <div class="game-container" id="gameContainer">
+
+      <!-- THANH TRẠNG THÁI TRÊN CÙNG CỦA KHUNG GAME -->
+      <header class="game-topbar" id="gameTopbar">
+        <div class="stat-badge progress-stat" id="statProgress">
+          <span class="stat-label">ĐÃ MỞ:</span>
+          <span class="stat-value" id="progressText">0/10</span>
+        </div>
+
+        <div class="game-topbar-center">
+          <div class="game-mini-title">
+            <svg class="mini-star-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" fill="#FFD23F"/>
+            </svg>
+            <span>RƯƠNG KIẾN THỨC – GDQP</span>
+          </div>
+        </div>
+
+        <div class="game-topbar-right">
+          <button type="button" class="btn-sound-toggle" id="btnSoundToggle" title="Bật/Tắt âm thanh hiệu ứng" aria-label="Bật/Tắt âm thanh">
+            <svg class="sound-icon-on" id="soundIconOn" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#FFD23F" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+            <svg class="sound-icon-off" id="soundIconOff" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#E53935" stroke-width="2" style="display:none">
+              <line x1="1" y1="1" x2="23" y2="23"/>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            </svg>
+          </button>
+          <div class="stat-badge score-stat" id="statScore">
+            <span class="stat-label">ĐIỂM:</span>
+            <span class="stat-value" id="scoreText">0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- KHU VỰC NỘI DUNG CHÍNH (THAY ĐỔI THEO CÁC BƯỚC) -->
+      <section class="game-stage" id="gameStage">
+
+        <!-- ==============================================
+             BƯỚC 1: MÀN CHỜ VÀ RƯƠNG KHO BÁU
+             ============================================== -->
+        <div class="view-panel view-idle active" id="viewIdle">
+          <!-- Huy hiệu Công an nhân dân cách điệu -->
+          <div class="emblem-wrapper" aria-hidden="true">
+            <svg class="cand-emblem-svg" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFF2A3"/>
+                  <stop offset="50%" stop-color="#FFD23F"/>
+                  <stop offset="100%" stop-color="#D4A017"/>
+                </linearGradient>
+                <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#E51937"/>
+                  <stop offset="100%" stop-color="#9E0C22"/>
+                </linearGradient>
+                <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+              <!-- Vòng tròn nền đỏ viền vàng -->
+              <circle cx="50" cy="50" r="46" fill="url(#redGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#FFD23F" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.8"/>
+              <!-- Bông lúa hai bên -->
+              <g fill="#FFD23F" opacity="0.9">
+                <!-- Cành lúa trái -->
+                <path d="M 20 62 C 16 50 20 34 32 25 C 29 32 28 42 32 50 C 27 54 22 58 20 62 Z"/>
+                <circle cx="21" cy="48" r="2.5"/>
+                <circle cx="23" cy="40" r="2.5"/>
+                <circle cx="27" cy="33" r="2.5"/>
+                <circle cx="32" cy="27" r="2.5"/>
+                <!-- Cành lúa phải -->
+                <path d="M 80 62 C 84 50 80 34 68 25 C 71 32 72 42 68 50 C 73 54 78 58 80 62 Z"/>
+                <circle cx="79" cy="48" r="2.5"/>
+                <circle cx="77" cy="40" r="2.5"/>
+                <circle cx="73" cy="33" r="2.5"/>
+                <circle cx="68" cy="27" r="2.5"/>
+              </g>
+              <!-- Ngôi sao vàng 5 cánh trung tâm -->
+              <polygon points="50,19 58,37 77,37 62,49 68,68 50,56 32,68 38,49 23,37 42,37" fill="url(#goldGrad)" stroke="#B38600" stroke-width="1" filter="url(#glowFilter)"/>
+            </svg>
+          </div>
+
+          <div class="idle-title-group">
+            <h1 class="main-title">RƯƠNG KIẾN THỨC</h1>
+            <p class="sub-title">GIÁO DỤC QUỐC PHÒNG – CÔNG AN NHÂN DÂN</p>
+          </div>
+
+          <!-- Chiếc Rương kho báu SVG -->
+          <div class="chest-presentation-area">
+            <!-- Vầng sáng hào quang dưới đáy rương -->
+            <div class="chest-aura" id="chestAura"></div>
+            
+            <!-- Hạt sáng lơ lửng -->
+            <div class="sparkles-container" id="sparklesContainer" aria-hidden="true">
+              <span class="sparkle s1"></span>
+              <span class="sparkle s2"></span>
+              <span class="sparkle s3"></span>
+              <span class="sparkle s4"></span>
+              <span class="sparkle s5"></span>
+              <span class="sparkle s6"></span>
+            </div>
+
+            <!-- Rương kho báu vẽ bằng SVG -->
+            <div class="chest-box floating-chest" id="chestBox">
+              <svg class="chest-svg" viewBox="0 0 240 200" width="220" height="184">
+                <defs>
+                  <linearGradient id="woodBase" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#1B4D2E"/>
+                    <stop offset="50%" stop-color="#0F2A1B"/>
+                    <stop offset="100%" stop-color="#0A1D13"/>
+                  </linearGradient>
+                  <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFE875"/>
+                    <stop offset="40%" stop-color="#FFD23F"/>
+                    <stop offset="80%" stop-color="#D4A017"/>
+                    <stop offset="100%" stop-color="#8C650A"/>
+                  </linearGradient>
+                  <linearGradient id="rubyLock" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FF2E4C"/>
+                    <stop offset="100%" stop-color="#800617"/>
+                  </linearGradient>
+                  <filter id="shadowEffect" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.6"/>
+                  </filter>
+                </defs>
+
+                <!-- Bóng đáy rương -->
+                <ellipse cx="120" cy="188" rx="85" ry="10" fill="#000" opacity="0.45" class="chest-ground-shadow"/>
+
+                <!-- THÂN RƯƠNG (DƯỚI) -->
+                <g class="chest-bottom" filter="url(#shadowEffect)">
+                  <!-- Thân gỗ sẫm -->
+                  <rect x="35" y="90" width="170" height="85" rx="10" fill="url(#woodBase)" stroke="#06130B" stroke-width="2"/>
+                  <!-- Vân trang trí thân -->
+                  <line x1="38" y1="120" x2="202" y2="120" stroke="#2E7D4F" stroke-width="1.5" opacity="0.4"/>
+                  <line x1="38" y1="148" x2="202" y2="148" stroke="#2E7D4F" stroke-width="1.5" opacity="0.4"/>
+                  <!-- Nẹp góc kim loại vàng trái & phải -->
+                  <path d="M 35 90 L 55 90 L 55 175 L 35 175 Z" fill="url(#goldTrim)"/>
+                  <path d="M 185 90 L 205 90 L 205 175 L 185 175 Z" fill="url(#goldTrim)"/>
+                  <!-- Nẹp giữa thân rương -->
+                  <path d="M 108 90 L 132 90 L 132 175 L 108 175 Z" fill="url(#goldTrim)"/>
+                  <rect x="35" y="165" width="170" height="10" rx="3" fill="url(#goldTrim)"/>
+
+                  <!-- Đinh tán vàng trên thân -->
+                  <circle cx="45" cy="100" r="2.5" fill="#FFE875"/>
+                  <circle cx="45" cy="135" r="2.5" fill="#FFE875"/>
+                  <circle cx="45" cy="160" r="2.5" fill="#FFE875"/>
+                  <circle cx="195" cy="100" r="2.5" fill="#FFE875"/>
+                  <circle cx="195" cy="135" r="2.5" fill="#FFE875"/>
+                  <circle cx="195" cy="160" r="2.5" fill="#FFE875"/>
+                  <circle cx="120" cy="160" r="2.5" fill="#FFE875"/>
+                </g>
+
+                <!-- NẮP RƯƠNG (TRÊN) - CÓ THỂ MỞ ĐƯỢC -->
+                <g class="chest-lid-group" id="chestLidGroup" filter="url(#shadowEffect)">
+                  <!-- Vòm nắp rương -->
+                  <path d="M 28 88 C 28 42 212 42 212 88 Z" fill="url(#woodBase)" stroke="#06130B" stroke-width="2"/>
+                  <!-- Đường viền đáy nắp -->
+                  <rect x="25" y="80" width="190" height="15" rx="4" fill="url(#goldTrim)"/>
+                  <!-- Vành cung kim loại vàng trên nắp -->
+                  <path d="M 30 84 C 30 52 50 48 56 48 C 48 52 48 84 48 84 Z" fill="url(#goldTrim)"/>
+                  <path d="M 210 84 C 210 52 190 48 184 48 C 192 52 192 84 192 84 Z" fill="url(#goldTrim)"/>
+                  <path d="M 108 82 C 108 44 132 44 132 82 Z" fill="url(#goldTrim)"/>
+
+                  <!-- Đinh tán trên nắp -->
+                  <circle cx="42" cy="72" r="2.5" fill="#FFE875"/>
+                  <circle cx="198" cy="72" r="2.5" fill="#FFE875"/>
+                  <circle cx="120" cy="55" r="2.5" fill="#FFE875"/>
+
+                  <!-- KHÓA RƯƠNG HÌNH HUY HIỆU NGÔI SAO VÀNG NỀN ĐỎ -->
+                  <g class="chest-lock">
+                    <circle cx="120" cy="92" r="19" fill="url(#rubyLock)" stroke="url(#goldTrim)" stroke-width="3"/>
+                    <circle cx="120" cy="92" r="14" fill="none" stroke="#FFD23F" stroke-width="1" stroke-dasharray="2,2"/>
+                    <!-- Ngôi sao vàng 5 cánh trên khóa -->
+                    <polygon points="120,79 123,87 132,87 125,93 128,101 120,96 112,101 115,93 108,87 117,87" fill="url(#goldTrim)" stroke="#8C650A" stroke-width="0.7"/>
+                    <!-- Lỗ khóa nhỏ -->
+                    <circle cx="120" cy="92" r="1.8" fill="#1A0005"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <!-- NÚT BẤM "MỞ RƯƠNG" -->
+          <div class="idle-action-area">
+            <button type="button" class="btn-gacha-open" id="btnOpenChest">
+              <span class="btn-shine"></span>
+              <span class="btn-inner">
+                <svg class="btn-star-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" fill="#FFD23F"/>
+                </svg>
+                <span class="btn-text">MỞ RƯƠNG</span>
+                <svg class="btn-star-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" fill="#FFD23F"/>
+                </svg>
+              </span>
+            </button>
+            <p class="idle-hint">Mở rương ngẫu nhiên để tiếp nhận câu hỏi điều lệnh & quy định CAND</p>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             BƯỚC 2: HOẠT ẢNH QUAY THẺ (REEL GACHA) & BẬT NẮP RƯƠNG
+             ============================================== -->
+        <div class="view-panel view-gacha" id="viewGacha">
+          <!-- PHÂN ĐOẠN 2A: DẢI THẺ BÀI QUAY NGANG (REEL) -->
+          <div class="reel-section" id="reelSection">
+            <div class="reel-header">
+              <span class="reel-title-tag">HỆ THỐNG ĐANG QUAY NGẪU NHIÊN...</span>
+            </div>
+
+            <div class="reel-wrapper" id="reelWrapper">
+              <!-- Vạch chỉ ở giữa (kim chỉ tâm) -->
+              <div class="reel-pointer pointer-top" aria-hidden="true"></div>
+              <div class="reel-pointer pointer-bottom" aria-hidden="true"></div>
+              <div class="reel-center-line" aria-hidden="true"></div>
+
+              <!-- Dải các thẻ bài cuộn ngang -->
+              <div class="reel-track" id="reelTrack">
+                <!-- Các thẻ bài sẽ được chèn bằng JS -->
+              </div>
+            </div>
+            <div class="reel-status" id="reelStatus">Đang quét hồ sơ trắc nghiệm...</div>
+          </div>
+
+          <!-- PHÂN ĐOẠN 2B: RƯƠNG BẬT MỞ & BÙNG TIA SÁNG -->
+          <div class="chest-opening-stage" id="chestOpeningStage">
+            <!-- Hiệu ứng chớp sáng màn hình -->
+            <div class="screen-flash" id="screenFlash" aria-hidden="true"></div>
+
+            <!-- Tia sáng vàng bùng toả từ miệng rương -->
+            <div class="light-rays-container" id="lightRaysContainer" aria-hidden="true">
+              <div class="light-ray r1"></div>
+              <div class="light-ray r2"></div>
+              <div class="light-ray r3"></div>
+              <div class="light-ray r4"></div>
+              <div class="light-ray r5"></div>
+              <div class="light-ray r6"></div>
+              <div class="light-ray r7"></div>
+              <div class="light-ray r8"></div>
+            </div>
+
+            <!-- Các hạt sao vàng bắn tung toé -->
+            <div class="star-burst-container" id="starBurstContainer" aria-hidden="true"></div>
+
+            <!-- Rương ở vị trí bùng nổ mở nắp -->
+            <div class="chest-burst-wrapper" id="chestBurstWrapper">
+              <svg class="chest-burst-svg" viewBox="0 0 240 220" width="240" height="220">
+                <defs>
+                  <linearGradient id="innerGlow" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#FFD23F"/>
+                    <stop offset="60%" stop-color="#FFF5B8"/>
+                    <stop offset="100%" stop-color="#FFFFFF"/>
+                  </linearGradient>
+                </defs>
+                <!-- Thân rương mở -->
+                <rect x="35" y="110" width="170" height="85" rx="10" fill="url(#woodBase)" stroke="#06130B" stroke-width="2"/>
+                <!-- Khoang sáng rực rỡ bên trong rương -->
+                <ellipse cx="120" cy="112" rx="75" ry="22" fill="url(#innerGlow)" class="chest-inner-glow"/>
+                <path d="M 35 110 L 55 110 L 55 195 L 35 195 Z" fill="url(#goldTrim)"/>
+                <path d="M 185 110 L 205 110 L 205 195 L 185 195 Z" fill="url(#goldTrim)"/>
+                <path d="M 108 110 L 132 110 L 132 195 L 108 195 Z" fill="url(#goldTrim)"/>
+                <!-- Nắp rương bật mở vểnh ngược lên trên -->
+                <g class="open-lid-anim">
+                  <path d="M 28 85 C 28 35 212 35 212 85 Z" fill="url(#woodBase)" stroke="#06130B" stroke-width="2" transform="rotate(-42 35 110)"/>
+                  <rect x="25" y="78" width="190" height="14" rx="4" fill="url(#goldTrim)" transform="rotate(-42 35 110)"/>
+                  <circle cx="120" cy="85" r="17" fill="url(#rubyLock)" stroke="url(#goldTrim)" stroke-width="3" transform="rotate(-42 35 110)"/>
+                  <polygon points="120,75 123,81 130,81 124,86 127,93 120,89 113,93 116,86 110,81 117,81" fill="url(#goldTrim)" transform="rotate(-42 35 110)"/>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Tấm thẻ bay lên khỏi rương và lật mặt -->
+            <div class="flying-card-wrapper" id="flyingCardWrapper">
+              <div class="card-3d-flip" id="card3dFlip">
+                <div class="card-face card-back">
+                  <div class="card-back-pattern">
+                    <svg viewBox="0 0 100 100" width="50" height="50">
+                      <circle cx="50" cy="50" r="44" fill="#C8102E" stroke="#FFD23F" stroke-width="3"/>
+                      <polygon points="50,22 57,38 74,38 61,48 66,65 50,55 34,65 39,48 26,38 43,38" fill="#FFD23F"/>
+                    </svg>
+                    <span id="cardBackLabel">MẬT LỆNH CAND</span>
+                  </div>
+                </div>
+                <div class="card-face card-front" id="cardFrontFace">
+                  <div class="card-front-content">
+                    <div class="card-front-star" id="flyingCardStar">★</div>
+                    <div class="card-front-code" id="flyingCardCode">[MẬT LỆNH #01]</div>
+                    <div class="card-front-title" id="flyingCardTitle">ĐẶC THÙ NHIỆM VỤ</div>
+                    <div class="card-front-badge" id="flyingCardBadge">CÂU 1/10</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             BƯỚC 3 & 4: THẺ CÂU HỎI VÀ CHỌN ĐÁP ÁN
+             ============================================== -->
+        <div class="view-panel view-quiz" id="viewQuiz">
+          <div class="quiz-card" id="quizCard">
+            <!-- Đầu thẻ câu hỏi -->
+            <div class="quiz-header">
+              <span class="quiz-order-tag" id="quizOrderTag">CÂU 1/10</span>
+              <span class="quiz-topic-tag" id="quizTopicTag">ĐIỀU LỆNH & TIÊU CHUẨN CAND</span>
+            </div>
+
+            <!-- Nội dung câu hỏi -->
+            <div class="quiz-question-box">
+              <h2 class="quiz-question-text" id="quizQuestionText">Nội dung câu hỏi sẽ hiển thị ở đây...</h2>
+            </div>
+
+            <!-- Danh sách 4 đáp án A, B, C, D -->
+            <div class="quiz-options-grid" id="quizOptionsGrid" role="group" aria-label="Danh sách lựa chọn đáp án">
+              <!-- Các nút A, B, C, D sẽ được tạo động bởi JS -->
+            </div>
+
+            <!-- Khu vực chân trang câu hỏi: Giải thích & Nút chuyển tiếp -->
+            <div class="quiz-footer-zone" id="quizFooterZone">
+              <!-- Hộp giải thích chi tiết sau khi chọn đáp án -->
+              <div class="quiz-explanation-box" id="quizExplanationBox">
+                <div class="explanation-header">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFD23F" stroke-width="2.2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <span>GIẢI THÍCH NHIỆM VỤ</span>
+                </div>
+                <p class="explanation-text" id="quizExplanationText">Giải thích sẽ hiển thị tại đây...</p>
+              </div>
+
+              <!-- Nút điều hướng tiếp theo: "MỞ RƯƠNG TIẾP THEO" hoặc "XEM KẾT QUẢ" -->
+              <div class="quiz-action-bar" id="quizActionBar">
+                <button type="button" class="btn-next-action" id="btnNextAction">
+                  <span class="btn-next-text" id="btnNextText">MỞ RƯƠNG TIẾP THEO</span>
+                  <svg class="btn-next-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             BƯỚC 5: MÀN KẾT THÚC VÀ TỔNG KẾT
+             ============================================== -->
+        <div class="view-panel view-result" id="viewResult">
+          <div class="result-card">
+            <!-- Huy hiệu chiến công -->
+            <div class="result-emblem-wrapper" aria-hidden="true">
+              <svg class="result-emblem-svg" viewBox="0 0 120 120">
+                <!-- Vòng nguyệt quế vàng -->
+                <circle cx="60" cy="60" r="52" fill="#9E0C22" stroke="#FFD23F" stroke-width="4"/>
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#D4A017" stroke-width="1.5" stroke-dasharray="3,2"/>
+                <!-- Ngôi sao lớn -->
+                <polygon points="60,24 70,45 93,45 74,60 81,83 60,68 39,83 46,60 27,45 50,45" fill="#FFD23F" stroke="#B38600" stroke-width="1.5"/>
+              </svg>
+            </div>
+
+            <h2 class="result-title">HOÀN THÀNH NHIỆM VỤ</h2>
+            <p class="result-subtitle">TỔNG KẾT KHÓA KIỂM TRA ĐIỀU LỆNH & TIÊU CHUẨN CAND</p>
+
+            <!-- Khối hiển thị điểm số chính -->
+            <div class="result-score-circle">
+              <div class="score-number-wrapper">
+                <span class="score-big" id="finalScoreBig">0</span>
+                <span class="score-total">/10</span>
+              </div>
+              <span class="score-unit">CÂU ĐÚNG</span>
+            </div>
+
+            <!-- Xếp loại & Nhận xét -->
+            <div class="result-rank-badge" id="resultRankBadge">XUẤT SẮC</div>
+            <p class="result-commentary" id="resultCommentary">Lời nhận xét tương ứng theo mức điểm...</p>
+
+            <!-- Bảng thống kê chi tiết -->
+            <div class="result-stats-row">
+              <div class="result-stat-item stat-correct">
+                <span class="res-num" id="resCorrectNum">0</span>
+                <span class="res-lbl">Trả lời đúng</span>
+              </div>
+              <div class="result-stat-item stat-wrong">
+                <span class="res-num" id="resWrongNum">0</span>
+                <span class="res-lbl">Trả lời sai</span>
+              </div>
+              <div class="result-stat-item stat-percent">
+                <span class="res-num" id="resAccuracyNum">0%</span>
+                <span class="res-lbl">Độ chính xác</span>
+              </div>
+            </div>
+
+            <!-- Nút bấm Chơi Lại -->
+            <div class="result-actions">
+              <button type="button" class="btn-replay" id="btnReplay">
+                <svg class="btn-replay-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"/>
+                </svg>
+                <span>CHƠI LẠI</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js?v=2.3"></script>
+</body>
+</html>
